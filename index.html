@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MJ Studio – Manoj Jat Photography</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#c9a84c;--gold-light:#e8c97a;--dark:#0d0d0d;--dark2:#141414;--dark3:#1c1c1c;--text:#e8e2d9;--muted:#8a8078}
+html{scroll-behavior:smooth}
+body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;width:100%;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 5%;background:linear-gradient(to bottom,rgba(13,13,13,.97),transparent);transition:background .4s}
+nav.scrolled{background:rgba(13,13,13,.98);box-shadow:0 1px 0 rgba(201,168,76,.1)}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:600;color:var(--gold);letter-spacing:.06em}
+.logo span{font-style:italic;font-weight:300;color:var(--text)}
+.nav-right{display:flex;align-items:center;gap:1.5rem}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;transition:color .3s}
+.nav-links a:hover{color:var(--gold)}
+.lang-toggle{display:flex;border:1px solid rgba(201,168,76,.4);overflow:hidden;border-radius:2px}
+.lang-btn{background:none;border:none;color:var(--muted);font-size:.72rem;letter-spacing:.08em;padding:.4rem .8rem;cursor:pointer;transition:all .25s;font-family:'DM Sans',sans-serif;text-transform:uppercase}
+.lang-btn.active{background:var(--gold);color:#0d0d0d;font-weight:500}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:24px;height:1.5px;background:var(--text)}
+
+/* HERO */
+#hero{height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;text-align:center}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(201,168,76,.12),transparent 65%),linear-gradient(160deg,#0d0d0d 30%,#1a1208 70%,#0d0d0d 100%)}
+.hero-grid{position:absolute;inset:0;opacity:.05;background-image:linear-gradient(var(--gold) 1px,transparent 1px),linear-gradient(90deg,var(--gold) 1px,transparent 1px);background-size:60px 60px}
+.hero-content{position:relative;z-index:2;padding:0 1.5rem}
+.hero-badge{display:inline-block;border:1px solid var(--gold);color:var(--gold);padding:.35rem 1.2rem;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:1.8rem;animation:fadeUp .8s .3s both}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,9vw,7rem);font-weight:300;line-height:1.08;animation:fadeUp .9s .5s both}
+.hero-title em{font-style:italic;color:var(--gold)}
+.hero-sub{margin-top:1.4rem;color:var(--muted);font-size:clamp(.88rem,1.5vw,1.05rem);max-width:500px;margin-inline:auto;animation:fadeUp .9s .7s both}
+.hero-cta{margin-top:2.8rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeUp .9s .9s both}
+.btn-gold{background:var(--gold);color:#0d0d0d;padding:.85rem 2.2rem;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:background .3s,transform .2s;display:inline-block}
+.btn-gold:hover{background:var(--gold-light);transform:translateY(-2px)}
+.btn-outline{border:1px solid var(--gold);color:var(--gold);padding:.85rem 2.2rem;font-family:'DM Sans',sans-serif;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:background .3s;display:inline-block}
+.btn-outline:hover{background:rgba(201,168,76,.1)}
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;color:var(--muted);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;animation:fadeUp .8s 1.3s both}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollDrop 1.8s 1.5s infinite}
+
+/* SECTIONS */
+section{padding:5.5rem 5%}
+.section-label{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,5vw,3rem);font-weight:300;line-height:1.2;margin-bottom:1.2rem}
+.section-title em{font-style:italic;color:var(--gold)}
+.section-divider{width:60px;height:1px;background:var(--gold);margin-bottom:2.5rem}
+.center{text-align:center}
+.center .section-divider{margin-inline:auto}
+
+/* SERVICES */
+#services{background:var(--dark)}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.4rem;margin-top:3rem}
+.service-card{background:var(--dark3);border:1px solid rgba(255,255,255,.05);padding:2rem 1.8rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+.service-card::before{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.service-card:hover{border-color:rgba(201,168,76,.3);transform:translateY(-4px)}
+.service-card:hover::before{transform:scaleX(1)}
+.service-icon{font-size:1.8rem;margin-bottom:1rem}
+.service-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;margin-bottom:.6rem}
+.service-desc{color:var(--muted);font-size:.86rem;line-height:1.75}
+
+/* ABOUT */
+#about{background:var(--dark2)}
+.about-wrap{display:grid;grid-template-columns:1fr 1.4fr;gap:4rem;align-items:center}
+.about-visual{position:relative;aspect-ratio:4/5;background:var(--dark3);border:1px solid rgba(201,168,76,.2)}
+.about-visual-inner{position:absolute;inset:1rem;background:repeating-linear-gradient(45deg,rgba(201,168,76,.04) 0,rgba(201,168,76,.04) 1px,transparent 1px,transparent 10px);display:flex;align-items:center;justify-content:center}
+.about-initials{font-family:'Cormorant Garamond',serif;font-size:7rem;font-weight:300;color:rgba(201,168,76,.2)}
+.about-gold-line{position:absolute;bottom:-1.5rem;right:-1.5rem;width:60%;height:60%;border-right:1px solid var(--gold);border-bottom:1px solid var(--gold)}
+.about-text p{color:var(--muted);line-height:1.9;margin-bottom:1.2rem;font-size:.93rem}
+.highlight{color:var(--gold-light)!important;font-style:italic}
+
+/* GALLERY */
+#gallery{background:var(--dark);text-align:center}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;margin-top:3rem}
+.gallery-item{aspect-ratio:1;background:var(--dark3);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.gallery-overlay{position:absolute;inset:0;background:rgba(201,168,76,.15);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;font-family:'Cormorant Garamond',serif;font-size:1rem;letter-spacing:.12em;color:var(--gold);text-transform:uppercase}
+.gallery-placeholder{color:rgba(201,168,76,.15);font-size:2.5rem}
+.gallery-note{margin-top:1.8rem;color:var(--muted);font-size:.82rem;font-style:italic}
+
+/* CONTACT */
+#contact{background:var(--dark2)}
+.contact-wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;align-items:start;margin-top:3rem}
+.contact-info{display:flex;flex-direction:column;gap:1.8rem}
+.contact-item{display:flex;gap:1.2rem;align-items:flex-start}
+.contact-icon{font-size:1.3rem;margin-top:.1rem}
+.contact-label{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}
+.contact-val{color:var(--text);font-size:.93rem}
+.contact-val a{color:var(--text);text-decoration:none}
+.contact-val a:hover{color:var(--gold)}
+.whatsapp-btn{display:inline-flex;align-items:center;gap:.6rem;background:#25D366;color:#fff;padding:.9rem 1.8rem;font-size:.85rem;font-weight:500;text-decoration:none;transition:opacity .3s;margin-top:.5rem;cursor:pointer;border:none;font-family:'DM Sans',sans-serif}
+.whatsapp-btn:hover{opacity:.88}
+form{display:flex;flex-direction:column;gap:1.1rem}
+form input,form textarea,form select{background:var(--dark3);border:1px solid rgba(255,255,255,.08);color:var(--text);padding:.9rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:.88rem;outline:none;transition:border-color .3s;width:100%}
+form input::placeholder,form textarea::placeholder{color:var(--muted)}
+form input:focus,form textarea:focus,form select:focus{border-color:var(--gold)}
+form select option{background:var(--dark3)}
+form textarea{resize:vertical;min-height:110px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.submit-btn{background:var(--gold);color:#0d0d0d;border:none;padding:1rem;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .3s;width:100%}
+.submit-btn:hover{background:var(--gold-light)}
+.form-success{color:#4caf81;font-size:.88rem;display:none;margin-top:.4rem;padding:.8rem 1rem;border:1px solid rgba(76,175,129,.25);line-height:1.6}
+
+/* FOOTER */
+footer{background:#080808;text-align:center;padding:2.5rem 5%;color:var(--muted);font-size:.8rem}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--gold);margin-bottom:.8rem}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--gold)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scrollDrop{0%,100%{opacity:.2}50%{opacity:1}}
+
+/* RESPONSIVE */
+@media(max-width:820px){
+  .nav-links{display:none;flex-direction:column;position:absolute;top:65px;left:0;right:0;background:rgba(13,13,13,.99);padding:1.5rem 5%;gap:1.5rem}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .about-wrap,.contact-wrap{grid-template-columns:1fr;gap:2.5rem}
+  .about-visual{aspect-ratio:3/2;max-height:250px}
+  .form-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="logo">MJ <span>Studio</span></div>
+  <div class="nav-right">
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#services" id="t-nav_services">Services</a></li>
+      <li><a href="#about" id="t-nav_about">About</a></li>
+      <li><a href="#gallery" id="t-nav_gallery">Gallery</a></li>
+      <li><a href="#contact" id="t-nav_contact">Contact</a></li>
+    </ul>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btnEn">EN</button>
+      <button class="lang-btn" id="btnHi">हि</button>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge" id="t-hero_badge">Photography &amp; Cinematography</div>
+    <h1 class="hero-title" id="t-hero_title">Capturing <em>Timeless</em><br>Moments</h1>
+    <p class="hero-sub" id="t-hero_sub">Professional photography &amp; videography for your most precious memories — by Manoj Jat</p>
+    <div class="hero-cta">
+      <a href="#services" class="btn-gold" id="t-hero_cta1">Explore Services</a>
+      <a href="#contact" class="btn-outline" id="t-hero_cta2">Book a Session</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span id="t-scroll">Scroll</span>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="center">
+    <p class="section-label" id="t-s_label">What We Offer</p>
+    <h2 class="section-title" id="t-s_title">Our <em>Services</em></h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card"><div class="service-icon">💍</div><div class="service-name" id="t-sv1n">Wedding Photography</div><div class="service-desc" id="t-sv1d">Full-day coverage of your wedding — from rituals to the grand celebration, shot with cinematic elegance.</div></div>
+    <div class="service-card"><div class="service-icon">🚁</div><div class="service-name" id="t-sv2n">Drone Shots</div><div class="service-desc" id="t-sv2d">Breathtaking aerial views that turn your venue into a cinematic masterpiece seen from above.</div></div>
+    <div class="service-card"><div class="service-icon">👰</div><div class="service-name" id="t-sv3n">Bride Photography</div><div class="service-desc" id="t-sv3d">Dedicated bridal sessions that beautifully capture the grace, glow and emotion of the bride.</div></div>
+    <div class="service-card"><div class="service-icon">📸</div><div class="service-name" id="t-sv4n">Model Photography</div><div class="service-desc" id="t-sv4d">Portfolio shoots, fashion editorials and creative model photography with professional setups.</div></div>
+    <div class="service-card"><div class="service-icon">🎥</div><div class="service-name" id="t-sv5n">YouTube Live Streaming</div><div class="service-desc" id="t-sv5d">Professional multi-camera live streaming of events and weddings directly to YouTube.</div></div>
+    <div class="service-card"><div class="service-icon">💑</div><div class="service-name" id="t-sv6n">Pre-Wedding Shoot</div><div class="service-desc" id="t-sv6d">Creative themed shoots at beautiful locations to tell your love story before the big day.</div></div>
+    <div class="service-card"><div class="service-icon">🏢</div><div class="service-name" id="t-sv7n">Corporate Events</div><div class="service-desc" id="t-sv7d">Professional photography and videography for corporate conferences, launches and brand events.</div></div>
+    <div class="service-card"><div class="service-icon">🎉</div><div class="service-name" id="t-sv8n">Birthdays &amp; Celebrations</div><div class="service-desc" id="t-sv8d">Candid and posed shots for birthdays, anniversaries, baby showers and every milestone.</div></div>
+    <div class="service-card"><div class="service-icon">🌅</div><div class="service-name" id="t-sv9n">Outdoor &amp; Nature Shoots</div><div class="service-desc" id="t-sv9d">Portrait and outdoor sessions using golden-hour natural light for stunning, organic results.</div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-wrap">
+    <div class="about-visual">
+      <div class="about-visual-inner"><div class="about-initials">MJ</div></div>
+      <div class="about-gold-line"></div>
+    </div>
+    <div class="about-text">
+      <p class="section-label" id="t-ab_label">The Artist Behind the Lens</p>
+      <h2 class="section-title" id="t-ab_title">Manoj <em>Jat</em></h2>
+      <div class="section-divider"></div>
+      <p id="t-ab_p1">Hi! I'm <strong>Manoj Jat</strong>, founder of <span class="highlight">MJ Studio</span>. Photography isn't just what I do — it's what I live for. Every shot comes straight from the heart.</p>
+      <p id="t-ab_p2">Though MJ Studio is new as a brand, the passion and hard work behind it is not. I've been capturing weddings, portraits, aerial shots and live events with full dedication and creativity.</p>
+      <p id="t-ab_p3"><span class="highlight">My promise: every client gets 100% effort, high-quality images, and memories worth keeping forever.</span> If you want someone who truly cares about your special moments — let's work together.</p>
+      <br/>
+      <a href="#contact" class="btn-gold" id="t-ab_cta">Let's Work Together</a>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div>
+    <p class="section-label center" id="t-g_label">Portfolio</p>
+    <h2 class="section-title center" id="t-g_title">Our <em>Gallery</em></h2>
+    <div class="section-divider" style="margin:0 auto 2.5rem"></div>
+    <p style="color:var(--muted);margin-top:1rem;font-size:.9rem;text-align:center" id="t-g_sub">Every frame is a memory — every shot, a masterpiece.</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item"><div class="gallery-placeholder">📷</div><div class="gallery-overlay" id="t-g1">Wedding</div></div>
+    <div class="gallery-item"><div class="gallery-placeholder">💍</div><div class="gallery-overlay" id="t-g2">Bride</div></div>
+    <div class="gallery-item"><div class="gallery-placeholder">🚁</div><div class="gallery-overlay" id="t-g3">Aerial</div></div>
+    <div class="gallery-item"><div class="gallery-placeholder">📸</div><div class="gallery-overlay" id="t-g4">Portrait</div></div>
+    <div class="gallery-item"><div class="gallery-placeholder">🌅</div><div class="gallery-overlay" id="t-g5">Outdoor</div></div>
+    <div class="gallery-item"><div class="gallery-placeholder">🎉</div><div class="gallery-overlay" id="t-g6">Events</div></div>
+  </div>
+  <p class="gallery-note" id="t-g_note">📌 To add real photos: replace the gallery placeholders with your actual images.</p>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="center">
+    <p class="section-label" id="t-c_label">Get in Touch</p>
+    <h2 class="section-title" id="t-c_title">Book a <em>Session</em></h2>
+    <div class="section-divider" style="margin-inline:auto"></div>
+  </div>
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div class="contact-label" id="t-c_phone_l">Phone / WhatsApp</div>
+          <div class="contact-val"><a href="tel:+917509100616">+91 7509100616</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-val"><a href="mailto:mjjat225@gmail.com">mjjat225@gmail.com</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-label" id="t-c_loc_l">Location</div>
+          <div class="contact-val" id="t-c_loc_v">India (Available to Travel)</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🕐</div>
+        <div>
+          <div class="contact-label" id="t-c_time_l">Availability</div>
+          <div class="contact-val" id="t-c_time_v">Mon – Sun &nbsp;|&nbsp; 9 AM – 8 PM</div>
+        </div>
+      </div>
+      <a class="whatsapp-btn" id="waDirectBtn" href="https://wa.me/917509100616?text=Namaste%20Manoj%20bhai!%20MJ%20Studio%20ke%20baare%20mein%20baat%20karni%20thi." target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <span id="t-wa_btn">Chat on WhatsApp</span>
+      </a>
+    </div>
+
+    <form id="bookingForm">
+      <div class="form-row">
+        <input type="text" id="f-name" placeholder="Your Name *" required/>
+        <input type="tel" id="f-phone" placeholder="Phone Number *" required/>
+      </div>
+      <input type="email" id="f-email" placeholder="Email Address (Optional)"/>
+      <select id="f-service" required>
+        <option value="" disabled selected>Select a Service *</option>
+        <option>Wedding Photography</option>
+        <option>Drone Shots</option>
+        <option>Bride Photography</option>
+        <option>Model Photography</option>
+        <option>YouTube Live Streaming</option>
+        <option>Pre-Wedding Shoot</option>
+        <option>Corporate Events</option>
+        <option>Birthdays &amp; Celebrations</option>
+        <option>Outdoor &amp; Nature Shoots</option>
+        <option>Other</option>
+      </select>
+      <input type="date" id="f-date"/>
+      <textarea id="f-msg" placeholder="Tell us about your event or any requirements..." rows="4"></textarea>
+      <button type="submit" class="submit-btn" id="t-submit_btn">📩 Send Booking Request</button>
+      <div class="form-success" id="formSuccess" id="t-form_ok">
+        ✅ Done! WhatsApp opened — just tap Send. Gmail will open in 2 seconds with full details.
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">MJ Studio</div>
+  <p id="t-footer_sub">Photography &amp; Cinematography by <strong>Manoj Jat</strong></p>
+  <p style="margin-top:.5rem"><a href="tel:+917509100616">+91 7509100616</a> &nbsp;|&nbsp; <a href="mailto:mjjat225@gmail.com">mjjat225@gmail.com</a></p>
+  <p style="margin-top:1.2rem;font-size:.7rem;opacity:.4">© 2025 MJ Studio. All rights reserved.</p>
+</footer>
+
+<script>
+// ── TRANSLATIONS ──
+var T = {
+  en: {
+    nav_services:'Services', nav_about:'About', nav_gallery:'Gallery', nav_contact:'Contact',
+    hero_badge:'Photography & Cinematography',
+    hero_title:'Capturing <em>Timeless</em><br>Moments',
+    hero_sub:'Professional photography & videography for your most precious memories — by Manoj Jat',
+    hero_cta1:'Explore Services', hero_cta2:'Book a Session', scroll:'Scroll',
+    s_label:'What We Offer', s_title:'Our <em>Services</em>',
+    sv1n:'Wedding Photography', sv1d:'Full-day coverage of your wedding — from rituals to the grand celebration, shot with cinematic elegance.',
+    sv2n:'Drone Shots', sv2d:'Breathtaking aerial views that turn your venue into a cinematic masterpiece seen from above.',
+    sv3n:'Bride Photography', sv3d:'Dedicated bridal sessions that beautifully capture the grace, glow and emotion of the bride.',
+    sv4n:'Model Photography', sv4d:'Portfolio shoots, fashion editorials and creative model photography with professional setups.',
+    sv5n:'YouTube Live Streaming', sv5d:'Professional multi-camera live streaming of events and weddings directly to YouTube.',
+    sv6n:'Pre-Wedding Shoot', sv6d:'Creative themed shoots at beautiful locations to tell your love story before the big day.',
+    sv7n:'Corporate Events', sv7d:'Professional photography and videography for corporate conferences, launches and brand events.',
+    sv8n:'Birthdays & Celebrations', sv8d:'Candid and posed shots for birthdays, anniversaries, baby showers and every milestone.',
+    sv9n:'Outdoor & Nature Shoots', sv9d:'Portrait and outdoor sessions using golden-hour natural light for stunning, organic results.',
+    ab_label:'The Artist Behind the Lens', ab_title:'Manoj <em>Jat</em>',
+    ab_p1:'Hi! I\'m <strong>Manoj Jat</strong>, founder of <span class="highlight">MJ Studio</span>. Photography isn\'t just what I do — it\'s what I live for. Every shot comes straight from the heart.',
+    ab_p2:'Though MJ Studio is new as a brand, the passion and hard work behind it is not. I\'ve been capturing weddings, portraits, aerial shots and live events with full dedication and creativity.',
+    ab_p3:'<span class="highlight">My promise: every client gets 100% effort, high-quality images, and memories worth keeping forever.</span> If you want someone who truly cares about your special moments — let\'s work together.',
+    ab_cta:'Let\'s Work Together',
+    g_label:'Portfolio', g_title:'Our <em>Gallery</em>', g_sub:'Every frame is a memory — every shot, a masterpiece.',
+    g1:'Wedding', g2:'Bride', g3:'Aerial', g4:'Portrait', g5:'Outdoor', g6:'Events',
+    g_note:'📌 To add real photos: replace the gallery placeholders with your actual images.',
+    c_label:'Get in Touch', c_title:'Book a <em>Session</em>',
+    c_phone_l:'Phone / WhatsApp', c_loc_l:'Location', c_loc_v:'India (Available to Travel)',
+    c_time_l:'Availability', c_time_v:'Mon – Sun | 9 AM – 8 PM',
+    wa_btn:'Chat on WhatsApp', submit_btn:'📩 Send Booking Request',
+    form_ok:'✅ Done! WhatsApp opened — just tap Send. Gmail will open in 2 seconds with full details.',
+    footer_sub:'Photography & Cinematography by <strong>Manoj Jat</strong>'
+  },
+  hi: {
+    nav_services:'Services', nav_about:'Hamare Baare Mein', nav_gallery:'Gallery', nav_contact:'Contact',
+    hero_badge:'Photography aur Videography',
+    hero_title:'Aapke <em>Khaas</em><br>Pal Capture Karein',
+    hero_sub:'Aapki sabse pyaari yaadein capture karna — Manoj Jat ke saath, professional andaaz mein',
+    hero_cta1:'Services Dekhein', hero_cta2:'Booking Karein', scroll:'Neeche Dekhein',
+    s_label:'Hum Kya Karte Hain', s_title:'Hamare <em>Services</em>',
+    sv1n:'Wedding Photography', sv1d:'Shaadi ke har pal ko capture karein — rituals se lekar reception tak, filmi andaaz mein.',
+    sv2n:'Drone Shots', sv2d:'Upar se liye gaye woh shots jo venue ko filmi bana dete hain.',
+    sv3n:'Bride Photography', sv3d:'Sirf dulhan ke liye session — unki khubsoorti aur emotions ko perfectly capture karna.',
+    sv4n:'Model Photography', sv4d:'Portfolio, fashion shoots aur creative model photography professional setup ke saath.',
+    sv5n:'YouTube Live Streaming', sv5d:'Events aur shaadi ka live stream seedha YouTube par — professional multi-camera setup ke saath.',
+    sv6n:'Pre-Wedding Shoot', sv6d:'Shaadi se pehle, aapki love story ko khoobsurat locations par capture karna.',
+    sv7n:'Corporate Events', sv7d:'Corporate meetings, launches aur brand events ki professional coverage.',
+    sv8n:'Birthday aur Celebrations', sv8d:'Birthday, anniversary, baby shower — har khaas occasion ki yaadein photo mein.',
+    sv9n:'Outdoor Shoots', sv9d:'Natural light mein outdoor portrait sessions — golden hour ka jadoo.',
+    ab_label:'Lens Ke Peeche Wala Fankaar', ab_title:'Manoj <em>Jat</em>',
+    ab_p1:'Namaste! Main hoon <strong>Manoj Jat</strong>, <span class="highlight">MJ Studio</span> ka founder. Photography mere liye sirf kaam nahi — yeh meri zindagi ka hissa hai. Har shot dil se aata hai.',
+    ab_p2:'MJ Studio ek nayi shuruwaat hai brand ke roop mein, lekin kaam aur mehnat naya nahi. Shaadiyaan, portraits, drone shots aur live events — sab cover kiya hai poori dedication ke saath.',
+    ab_p3:'<span class="highlight">Mera waada: har client ko 100% mehnat, high-quality photos, aur aisi yaadein jo zindagi bhar saath rahen.</span> Agar chahte ho ki aapke khaas pal sahi tarah capture hon — chalte hain saath mein.',
+    ab_cta:'Milte Hain – Book Karein',
+    g_label:'Hamare Kaam Ki Jhalak', g_title:'Hamare <em>Shots</em>', g_sub:'Har frame ek yaad hai — har shot, ek nayab kaam.',
+    g1:'Shaadi', g2:'Dulhan', g3:'Drone Shot', g4:'Portrait', g5:'Outdoor', g6:'Events',
+    g_note:'📌 Apni real photos add karne ke liye gallery placeholders ko apni images se replace karein.',
+    c_label:'Baat Karte Hain', c_title:'Abhi <em>Booking</em> Karein',
+    c_phone_l:'Phone / WhatsApp', c_loc_l:'Location', c_loc_v:'India – Travel Bhi Karte Hain',
+    c_time_l:'Timing', c_time_v:'Somwar – Ravivar | Subah 9 – Shaam 8',
+    wa_btn:'WhatsApp Par Baat Karein', submit_btn:'📩 Booking Request Bhejein',
+    form_ok:'✅ Ho gaya! WhatsApp message khul gaya — bas Send dabao. Gmail bhi 2 second mein draft ho jayega.',
+    footer_sub:'Photography aur Videography by <strong>Manoj Jat</strong>'
+  }
+};
+
+var currentLang = 'en';
+
+function applyLang(lang) {
+  currentLang = lang;
+  document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+  document.getElementById('btnHi').classList.toggle('active', lang === 'hi');
+  var data = T[lang];
+  for (var key in data) {
+    var el = document.getElementById('t-' + key);
+    if (el) el.innerHTML = data[key];
+  }
+  // placeholders
+  var ph = lang === 'hi'
+    ? {name:'Aapka Naam *', phone:'Phone Number *', email:'Email Address (Optional)', msg:'Apne event ya requirements ke baare mein batayein...'}
+    : {name:'Your Name *', phone:'Phone Number *', email:'Email Address (Optional)', msg:'Tell us about your event or any requirements...'};
+  document.getElementById('f-name').placeholder = ph.name;
+  document.getElementById('f-phone').placeholder = ph.phone;
+  document.getElementById('f-email').placeholder = ph.email;
+  document.getElementById('f-msg').placeholder = ph.msg;
+}
+
+document.getElementById('btnEn').addEventListener('click', function() { applyLang('en'); });
+document.getElementById('btnHi').addEventListener('click', function() { applyLang('hi'); });
+
+// NAV scroll
+window.addEventListener('scroll', function() {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Mobile menu
+document.getElementById('hamburger').addEventListener('click', function() {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+document.querySelectorAll('.nav-links a').forEach(function(a) {
+  a.addEventListener('click', function() {
+    document.getElementById('navLinks').classList.remove('open');
+  });
+});
+
+// FORM SUBMIT — WhatsApp + Gmail
+document.getElementById('bookingForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  var name    = document.getElementById('f-name').value.trim();
+  var phone   = document.getElementById('f-phone').value.trim();
+  var email   = document.getElementById('f-email').value.trim();
+  var service = document.getElementById('f-service').value;
+  var date    = document.getElementById('f-date').value;
+  var msg     = document.getElementById('f-msg').value.trim();
+
+  // 1. Open WhatsApp
+  var waMsg = '*New Booking – MJ Studio*\n\n' +
+    'Name: ' + name + '\n' +
+    'Phone: ' + phone + '\n' +
+    'Email: ' + (email || 'N/A') + '\n' +
+    'Service: ' + service + '\n' +
+    'Date: ' + (date || 'Not specified') + '\n' +
+    'Message: ' + (msg || '—');
+  window.open('https://wa.me/917509100616?text=' + encodeURIComponent(waMsg), '_blank');
+
+  // 2. Open Gmail after 2 seconds
+  setTimeout(function() {
+    var subject = 'Booking Request – ' + service + ' | MJ Studio';
+    var body = 'Hello Manoj,\n\nNew booking request from MJ Studio website:\n\n' +
+      'Name: ' + name + '\nPhone: ' + phone + '\nEmail: ' + (email || 'N/A') +
+      '\nService: ' + service + '\nDate: ' + (date || 'Not specified') +
+      '\nMessage: ' + (msg || '—') + '\n\nPlease follow up!';
+    window.open(
+      'https://mail.google.com/mail/?view=cm&to=mjjat225@gmail.com&su=' +
+      encodeURIComponent(subject) + '&body=' + encodeURIComponent(body),
+      '_blank'
+    );
+  }, 2000);
+
+  // Show success
+  var s = document.getElementById('formSuccess');
+  s.innerHTML = T[currentLang].form_ok;
+  s.style.display = 'block';
+  document.getElementById('bookingForm').reset();
+  setTimeout(function() { s.style.display = 'none'; }, 10000);
+});
+</script>
+</body>
+</html>
