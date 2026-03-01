@@ -1,0 +1,20 @@
+Gallery Mein Real Photos Kaise Lagayein (Future)
+Jab bhi photos add karni ho:
+Step 1 — Photo ko repo mein upload karo (same jagah jahan index.html hai)
+Step 2 — Gallery section mein yeh wala part dhundo:
+
+html<div class="gallery-item">
+  <div class="gallery-placeholder">📷</div>
+  <div class="gallery-overlay" id="t-g1">Wedding</div>
+</div>
+
+Badlo is se:
+
+html<div class="gallery-item">
+  <img src="wedding1.jpg" style="width:100%;height:100%;object-fit:cover"/>
+  <div class="gallery-overlay" id="t-g1">Wedding</div>
+</div>
+Step 3 — 6 boxes hain gallery mein, sabko isi tarah replace karo apni photos se.
+
+Photo Names simple rakho jaise:
+wedding1.jpg, bride1.jpg, drone1.jpg — spaces mat rakho naam mein, underscores ya numbers use karo. ✅
